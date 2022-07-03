@@ -1,0 +1,28 @@
+pip install virtualenv
+python -m virtualenv env
+
+pip install django channels 
+pip install pillow
+pip install psycopg2
+pip install requests
+pip install bs4
+pip install --upgrade pip
+
+python manage.py startapp model_name
+python manage.py makemigrations // tạo models
+python manage.py migrate // tạo models vào database
+python manage.py createsuperuser // tạo admin
+python manage.py runserver
+
+ngrok config add-authtoken 1x72Z67d0wNyOioMoumJHqgcciI_7wgkJGKhrF8t8rjuHTYRW
+ngrok http 8000
+
+d:/xampp/htdocs/Python/env/Scripts/activate.bat
+d:/xampp/htdocs/azurlane/env/Scripts/activate.bat
+
+pip freeze > requirements.txt
+pip uninstall requirements.txt
+
+pip install -r requirements.txt
+
+pip install django-heroku gunicorn whitenoise

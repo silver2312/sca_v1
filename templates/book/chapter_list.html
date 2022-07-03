@@ -1,0 +1,27 @@
+{% load book_tags %}
+{% if data %}
+    <div class="row">
+        {% for x,val in data %}
+            <div  class="col-md-4 text-left">
+            {% if x <= 100 %}
+                <h4 class="border-bottom pl-1" style="color:#e1e1e1;" {% if x == 100 %}  id="my_chapter" {% endif %}>
+            {% else %}
+                <h4 class="border-bottom pl-1">
+            {% endif %}
+                    <a href="/b/{{ url|g_host }}/{{ url|get_host_id }}/{{x}}/" class="wrd">
+                        {% if val.sub_title %}
+                            <span rel="tool-tip" data-placement="bottom" title="{{ val.sub_title }}">{{ val.sub_title }}</span>
+                        {% else %}
+                            <span rel="tool-tip" data-placement="bottom" title="{{ val.title }}">{{ val.title }}</span>
+                        {% endif %}
+                    </a>
+                </h4>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <center>Truyện chưa có chương hoặc có lỗi xảy ra.</center>
+{% endif %}
+<script>
+    scroltoView();
+</script>

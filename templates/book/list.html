@@ -1,0 +1,71 @@
+{% extends 'layouts/app.html' %}
+{% block title %} Tìm kiếm truyện {% endblock title %}
+{% block content %}
+{% load humanize %}
+{% load book_tags %}
+<div class="row">
+    {% if book %}
+        {% for bk in book %}
+            <div class="col-4 col-sm-4 col-md-2">
+                <div class="card  text-center">
+                    <img class="card-img-top" src="/{{bk.image}}" alt="{{ bk.name }}" height="200">
+                    <div class="card-body p-0">
+                        {% if bk.url|check_url %}
+                            <h3 class="mt-1"><a href="/b/{{ bk.url|g_host }}/{{ bk.url|get_host_id }}/">{{ bk.title|trans_text }}</a></h3>
+                        {% else %}
+                            <h3 class="mt-1"><a href="/b/{{ bk.url }}/{{ bk.id }}/">{{ bk.title|trans_text }}</a></h3>
+                        {% endif %}                        
+                        <small class="text-muted  d-block">{{ bk.author|trans_author }}</small>
+                        <small class="text-muted d-block">{{ bk.date_update|naturaltime }}</small>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <center class="h1">Không tìm thấy sách bạn muốn tìm.</center>
+    {% endif %}
+</div>
+{% endblock content %}
+{% block pagi_chapter %}
+    <ul class="pagination mt-3 float-left ml-2">
+        <li class="page-item">
+            {% if book.has_previous %}
+                <a class="page-link" href="?page={{ book.previous_page_number }}&key={{key}}" aria-label="Previous">
+                    <i class="fa fa-angle-left"></i>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <script>
+                    function leftArrowPressed() {
+                        window.location.replace("?page={{ book.previous_page_number }}&key={{key}}");
+                    }
+                </script>
+            {% endif %}
+        </li>
+        <li class="page-item">
+            {% if book.has_next %}
+                <a class="page-link" href="?page={{ book.next_page_number }}&key={{key}}" aria-label="Next">
+                    <i class="fa fa-angle-right"></i>
+                    <span class="sr-only">Next</span>
+                </a>
+                <script>
+                    function rightArrowPressed() {
+                        window.location.replace("?page={{ book.next_page_number }}&key={{key}}");
+                    }
+                </script>
+            {% endif %}
+        </li>
+    </ul>
+    <script>
+        document.onkeydown = function(evt) {
+            evt = evt || window.event;
+            switch (evt.keyCode) {
+                case 37:
+                    leftArrowPressed();
+                    break;
+                case 39:
+                    rightArrowPressed();
+                    break;
+            }
+        };
+    </script>
+{% endblock pagi_chapter %}

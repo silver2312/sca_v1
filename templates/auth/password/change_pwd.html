@@ -1,0 +1,55 @@
+{% extends 'layouts/app.html' %}
+{% block title %}Đổi mật khẩu{% endblock title %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-5 col-md-7">
+        {% if validlink %}
+        <div class="card bg-secondary shadow border-0">
+            <div class="card-body px-lg-5 py-lg-5">
+                <div class="text-center text-muted mb-4">
+                    <small>Đổi Mật Khẩu</small>
+                </div>
+                <form role="form" method="POST">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                        <div class="alert alert-danger alert-dismissible" role="alert">
+                            <div id="form_errors">
+                                {% for key, value in form.errors.items %}
+                                    <strong>{{ value }}</strong>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                            </div>
+                            <input class="form-control" name="new_password1" placeholder="Mật khẩu" type="password" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                            </div>
+                            <input class="form-control" placeholder="Xác nhận mật khẩu" type="password" name="new_password2" required>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary my-4">Tạo mật khẩu mới</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% else %}
+            <div class="alert alert-warning">
+                Liên kết đặt lại mật khẩu không hợp lệ, có thể vì nó đã được sử dụng.
+                Vui lòng yêu cầu đặt lại mật khẩu mới.
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}

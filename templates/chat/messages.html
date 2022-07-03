@@ -1,0 +1,31 @@
+{% load humanize %}
+{% for m in messages %}
+    <div class="{% if m.user.pk == request.user.pk %} chat-message-right {% else %} chat-message-left {% endif %} bg-light rounded mb-2"data-toggle="tooltip" data-placement="left" title="{{m.date_added | naturaltime}}">
+        <div class="flex-shrink-1 py-1 px-1">
+            <strong><a href="/profile/{{m.user.pk}}/" target="_blank" 
+                {% if m.user.level == 0 %}
+                    class="anh_nhieu_mau"
+                {% elif m.user.level == 1 %}
+                    class="anh_do1"
+                {% elif m.user.level == 2 %}
+                    class="anh_tim2"
+                {% elif m.user.level == 3 %}
+                    class="anh_tim3"
+                {% elif m.user.level == 4 %}
+                    class="mau_do"
+                {% elif m.user.level == 5 %}
+                    class="mau_do"
+                {% endif %}
+                >{{ m.user.name }}</a></strong>
+            <span style="font-size:12px;color:black !important;" class="">: {{ m.content }}</span>
+            <i class="ni ni-curved-next pointer" onclick="rep_mess('@{{m.user.name}} ');"></i>
+        </div>
+    </div>
+{% endfor %}
+<script>
+    function scroll_mess(){
+        const element = document.querySelector('#chat-messages');
+        element.scrollTop = element.scrollHeight;
+    }
+    scroll_mess();
+</script>

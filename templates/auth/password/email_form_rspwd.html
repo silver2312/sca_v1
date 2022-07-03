@@ -1,0 +1,12 @@
+{% autoescape off %}
+    Để bắt đầu quá trình đặt lại mật khẩu cho email {{ user.email }},
+    nhấp vào liên kết bên dưới:
+
+    {{ protocol }}://{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}
+
+    Nếu việc nhấp vào liên kết ở trên không hoạt động, vui lòng sao chép và dán URL vào một trình duyệt mới
+    cửa sổ thay thế.
+
+    Trân trọng,
+    MyScáthach
+{% endautoescape %}

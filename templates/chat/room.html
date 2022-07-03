@@ -1,0 +1,153 @@
+{% load humanize %}
+<style>
+    .message{
+        overflow: auto;
+        height:450px;
+    }
+
+    .chat-messages {
+        display: flex;
+        flex-direction: column;
+        max-height: 500px;
+        overflow-y: scroll
+    }
+
+    .chat-message-left,
+    .chat-message-right {
+        display: flex;
+        flex-shrink: 0
+    }
+
+    .chat-message-left {
+        margin-right: auto
+    }
+    .chat-message-right {
+        margin-left: auto
+    }
+    .py-3 {
+        padding-top: 1rem!important;
+        padding-bottom: 1rem!important;
+    }
+    .px-4 {
+        padding-right: 1.5rem!important;
+        padding-left: 1.5rem!important;
+    }
+    .flex-grow-0 {
+        flex-grow: 0!important;
+    }
+    .border-top {
+        border-top: 1px solid #dee2e6!important;
+    }
+</style>
+<main class="content">
+    <div class="card">
+        <div class="row g-0">
+            <div class="col-12">
+                <div class="position-relative">                        
+                    <div class="chat-messages p-4" id="chat-messages">
+                        {% for m in messages %}
+                            <div class="{% if m.user.pk == request.user.pk %} chat-message-right {% else %} chat-message-left {% endif %} bg-light rounded mb-2"data-toggle="tooltip" data-placement="left" title="{{m.date_added | naturaltime}}">
+                                <div class="flex-shrink-1 py-1 px-1">
+                                    <strong><a href="/profile/{{m.user.pk}}/" target="_blank" 
+                                        {% if m.user.level == 0 %}
+                                            class="anh_nhieu_mau"
+                                        {% elif m.user.level == 1 %}
+                                            class="anh_do1"
+                                        {% elif m.user.level == 2 %}
+                                            class="anh_tim2"
+                                        {% elif m.user.level == 3 %}
+                                            class="anh_tim3"
+                                        {% elif m.user.level == 4 %}
+                                            class="mau_do"
+                                        {% elif m.user.level == 5 %}
+                                            class="mau_do"
+                                        {% endif %}
+                                        >{{ m.user.name }}</a></strong>
+                                    <span style="font-size:12px;color:black !important;" class="">: {{ m.content }}</span>
+                                    <i class="ni ni-curved-next pointer" onclick="rep_mess('@{{m.user.name}} ');"></i>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                <div class="flex-grow-0 py-3 px-4 border-top">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="content" id="chat-message-input" maxlength="200" placeholder="Nhập tin nhắn" autocomplete="off" required>
+                        <button class="btn btn-primary" id="chat-message-submit"><i class="ni ni-send"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% block scripts %}
+    {{ room.slug|json_script:"json-roomname" }}
+    {{ request.user.pk|json_script:"json-user_id" }}
+    <script>
+        function scroll_mess(){
+            const element = document.querySelector('#chat-messages');
+            element.scrollTop = element.scrollHeight;
+        }
+        scroll_mess();
+        room_name('{{room.name}}');
+    </script>
+    <script>
+        
+        const roomName = JSON.parse(document.getElementById('json-roomname').textContent);
+        const userID = JSON.parse(document.getElementById('json-user_id').textContent);
+        function get_mess(){
+            $.get("/chat/mess/53252623623632623/".replace("53252623623632623", roomName), function(data, status){
+                $('#chat-messages').html(data);
+            });
+        }
+        var ws ='wss://';
+        var wss = '/wss/';
+        if (location.protocol == "http:"){
+            ws = 'ws://';
+            wss = '/ws/'
+        }
+        const chatSocket = new WebSocket(
+            ws
+            + window.location.host
+            + wss
+            + roomName
+            + '/'
+        );
+
+        chatSocket.onmessage = function(e) {
+            console.log('Server đang hoạt động');
+        };
+
+        chatSocket.onclose = function(e) {
+            console.error('Đóng server');
+            location.reload();
+        };
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+        
+            if (data.message) {
+                get_mess();
+            }
+        };
+        
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+            if (e.keyCode === 13 && $('#chat-message-input').val() != '') {
+                document.querySelector('#chat-message-submit').click();
+                get_mess();
+            }
+        };
+        
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value;
+        
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'user_id': userID,
+                'room': roomName
+            }));
+        
+            messageInputDom.value = '';
+        };    
+    </script>
+{% endblock %}

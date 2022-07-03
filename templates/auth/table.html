@@ -1,0 +1,26 @@
+{% extends 'layouts/app.html' %}
+{% block title %}Danh sách người dùng{% endblock title %}
+{% block content %}
+    <div class="table-responsive">
+        <table class="table table-flush table-dark">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tên</th>
+                    <th scope="col">Khắc chế</th>
+                    <th scope="col">Cài đặt</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if data %}
+                    {% for value in data %}
+                        <tr>
+                            <th scope="row">{{ value.id }}</th>
+                            <td>{{ value.name }}</td>                        
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock content %}

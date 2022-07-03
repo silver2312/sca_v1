@@ -1,0 +1,235 @@
+{% extends 'layouts/app.html' %}
+{% load i18n %}
+{% load humanize %}
+{% load book_tags %}
+{% block title %} Đọc truyện {{title|trans_text}} {% endblock title %}
+{% block content %}
+<style>
+    @media (max-width: 479px) {
+        .card-body{
+            text-align:center;
+        }
+    }
+</style>
+<div class="card">
+    <!-- Card body -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3">
+                <img src="/{{image_b}}" class="img-center img-fluid shadow shadow-lg--hover rounded" style="width: 200px;height:320px;box-shadow: 0 0 24px grey;">
+            </div>
+            <div class="float-left col-md-8">
+                <h1 class="h2 title">
+                    <span class="d-block mb-1">{{title|trans_text}}</span>
+                    <small class="d-block h4">Tác giả: <a href="/b/search/?key={{author|trans_author}}">{{author|trans_author}}</a></small>
+                    <small class="d-block h4">Thể loại:
+                        {% if category %}
+                            {% for tl in category %}
+                                <button class="btn btn-sm btn-info">{{ tl.name }}</button>
+                            {% endfor %}
+                        {% endif %}
+                    </small>
+                    <small class="d-block h4">Tag: 
+                        {% if tag %}
+                            {% for t in tag %}
+                                <button class="btn btn-sm btn-info">{{ t.name }}</button>
+                            {% endfor %}
+                        {% endif %}
+                    </small>
+                    <small class="d-block h4">Trạng thái: {{ status }}</small>
+                    <small class="d-block h4">Ngày cập nhật: {{ date|naturaltime }}</small>
+                    <small class="d-block h4">
+                        <form class="rate-form" action="" method="POST" id="{{id}}">
+                            {% csrf_token %}
+                            <button type="submit" class="fa fa-star fa-2x my-btn" id="first"></button>
+                            <button type="submit" class="fa fa-star fa-2x my-btn" id="second"></button>
+                            <button type="submit" class="fa fa-star fa-2x my-btn" id="third"></button>
+                            <button type="submit" class="fa fa-star fa-2x my-btn" id="fourth"></button>
+                            <button type="submit" class="fa fa-star fa-2x my-btn" id="fifth"></button>
+                            ({{rating}})
+                    </form>
+                    </small>
+                </h1>
+                <div class="mt-3">
+                    <button type="button" class="btn btn-sm btn-default">
+                        <span><i class="ni ni-book-bookmark"></i></span>
+                        <span class="badge badge-primary">24</span>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-info">
+                        <span><i class="ni ni-chat-round"></i></span>
+                        <span class="badge badge-primary">24</span>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-success">
+                        <span><i class="fa fa-eye"></i></span>
+                        <span class="badge badge-primary">24</span>
+                    </button>                    
+                    <button type="button" class="btn btn-sm btn-warning">
+                        <span><i class="ni ni-bullet-list-67"></i></span>
+                        <span class="badge badge-primary">24</span>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-danger">
+                        <span><i class="fa fa-gift"></i></span>
+                        <span class="badge badge-primary">24</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--- Text -->
+        <div class="accordion mt-3" id="accordionExample">
+            <div class="card">
+                <button class="btn btn-sm btn-info" id="headingOne" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Tóm tắt</button>
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                    <p>{{ des|trans_des|safe }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <button class="btn btn-sm btn-info" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" onclick="chap_list( {{id}} );">Danh sách chương</button>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                    <div class="card-body" id="chap-list">
+                        <center><div class="loader"></div>Đang tải danh sách chương</center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--- Text -->
+    </div>
+</div>
+
+<script>
+    // get all the stars
+    const one = document.getElementById('first')
+    const two = document.getElementById('second')
+    const three = document.getElementById('third')
+    const four = document.getElementById('fourth')
+    const five = document.getElementById('fifth')
+    
+    // get the form, confirm-box and csrf token
+    const form = document.querySelector('.rate-form')
+    const confirmBox = document.getElementById('confirm-box')
+    const csrf = document.getElementsByName('csrfmiddlewaretoken')
+    
+    const handleStarSelect = (size) => {
+        const children = form.children
+        for (let i=0; i < children.length; i++) {
+            if(i <= size) {
+                children[i].classList.add('checked')
+            } else {
+                children[i].classList.remove('checked')
+            }
+        }
+    }
+    
+    const handleSelect = (selection) => {
+        switch(selection){
+            case 'first': {
+                handleStarSelect(1)
+                return
+            }
+            case 'second': {
+                handleStarSelect(2)
+                return
+            }
+            case 'third': {
+                handleStarSelect(3)
+                return
+            }
+            case 'fourth': {
+                handleStarSelect(4)
+                return
+            }
+            case 'fifth': {
+                handleStarSelect(5)
+                return
+            }
+            default: {
+                handleStarSelect(0)
+            }
+        }
+    
+    }
+    const getNumericValue = (stringValue) =>{
+        let numericValue;
+        if (stringValue === 'first') {
+            numericValue = 1
+        } 
+        else if (stringValue === 'second') {
+            numericValue = 2
+        }
+        else if (stringValue === 'third') {
+            numericValue = 3
+        }
+        else if (stringValue === 'fourth') {
+            numericValue = 4
+        }
+        else if (stringValue === 'fifth') {
+            numericValue = 5
+        }
+        else {
+            numericValue = 0
+        }
+        return numericValue
+    }
+    
+    if (one) {
+        handleStarSelect({{rating}})
+        {% if request.user.is_authenticated %}
+            const check = {{rt_check}}
+            if ( check == 0) {
+                const arr = [one, two, three, four, five]
+            
+                arr.forEach(item=> item.addEventListener('mouseover', (event)=>{
+                    handleSelect(event.target.id)
+                }))
+                
+                arr.forEach(item=> item.addEventListener('click', (event)=>{
+                    // value of the rating not numeric
+                    const val = event.target.id
+                    
+                    let isSubmit = false
+                    form.addEventListener('submit', e=>{
+                        e.preventDefault()
+                        if (isSubmit) {
+                            return
+                        }
+                        isSubmit = true
+                        // picture id
+                        const id = e.target.id
+                        // value of the rating translated into numeric
+                        const val_num = getNumericValue(val)
+            
+                        $.ajax({
+                            type: 'POST',
+                            url: '/b/rate/',
+                            data: {
+                                'csrfmiddlewaretoken': csrf[0].value,
+                                'bk_id': id,
+                                'rate': val_num,
+                            },
+                            success: function(data){
+                                console.log(data)
+                                if(data['success']){
+                                    toastr.success('Bạn đã đánh giá truyện thành công!')
+                                }else if(data['warring']){
+                                    toastr.warning('Bạn đã đánh giá truyện này rồi!')
+                                }else if(data['check']){
+                                    toastr.warning('Truyện này chưa được quản lý duyệt!')
+                                }else{
+                                    toastr.error('Có lỗi xảy ra!')
+                                }
+                            },
+                            error: function(data){
+                                console.log(data)
+                                toastr.error('Có lỗi xảy ra');
+                            },complete: function(data){
+                                //
+                            }
+                        })
+                    })
+                }))
+            }
+        {%endif%}
+    }
+</script>
+{% endblock content %}

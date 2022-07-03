@@ -1,0 +1,56 @@
+<div class="row">
+    <button class="btn btn-sm btn-default ml-3 mb-2" onclick="menu_profile()"><i class="ni ni-bold-left"></i></button>
+    {% if friend_requests %}
+        {% for request in friend_requests %}
+            <div class="col-12">
+                <div class="card">
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <!-- Avatar -->
+                                <span class="avatar avatar-xl rounded-circle">
+                                    <img alt="Image placeholder" src="/{{request.sender.profile_image}}">
+                                </span>                
+                            </div>
+                            <div class="col ml--2">
+                                <h4 class="mb-0">
+                                    <a href="/profile/{{request.sender.id}}/" target="_blank">{{request.sender.name}}</a>
+                                </h4>                        
+                                <p class="text-sm text-muted mb-0">Check</p>
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-sm btn-primary" ><i class="ni ni-check-bold" id="id_confirm_{{request.sender.id}}" onclick='triggerAcceptFriendRequest("{{request.id}}")'></i></button>
+                                <button type="button" class="btn btn-sm btn-danger" id="id_cancel_{{request.sender.id}}" onclick='triggerDeclineFriendRequest("{{request.id}}")'><i class="ni ni-fat-remove"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="d-flex flex-row flex-grow-1 justify-content-center align-items-center p-4">
+            <p>Chưa có yêu cầu kết bạn nào</p>
+        </div>
+    {% endif %}
+</div>
+
+<script type="text/javascript">
+
+	function onFriendRequestAccepted(){
+        friend_list({{request.user.id}});
+	}
+
+	function onFriendRequestDeclined(){
+		friend_list({{request.user.id}});
+	}
+
+	function triggerAcceptFriendRequest(friend_request_id){
+		acceptFriendRequest(friend_request_id, onFriendRequestAccepted)
+	}
+
+	function triggerDeclineFriendRequest(friend_request_id){
+		declineFriendRequest(friend_request_id, onFriendRequestDeclined)
+	}
+</script>
+<script type="text/javascript" src="/static/custom/custom.js"></script>

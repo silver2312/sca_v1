@@ -1,0 +1,107 @@
+{% extends 'layouts/app.html' %}
+{% block title %}Trang cá nhân{% endblock title %}
+{% block content %}
+
+{% if background_image %}
+    <style>
+        .bg{
+            height: 120%;
+            background-image: url("/{{ background_image }}");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .bg::before{
+            content: ' ';
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 120%;
+            background-color: rgba(94, 89, 89, 0.288);
+        }
+    </style>
+    <script>
+        var element = document.getElementById("panel");
+        element.classList.add("bg");
+    </script>
+{% endif %}
+
+<div class="header pb-8 align-items-center" style="min-height: 150px; background: transparent;">
+    {% if url_music %}
+        <audio controls loop class="form-control col-md-6" id="volum_audio" style="opacity:0;" controlsList="nodownload">
+            <source src="/{{ url_music }}" type="audio/mpeg">
+        </audio>
+    {% endif %}
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card khong_mau">
+            <div class="card-profile-image">
+                <img src="/{{ profile_image }}" style="box-shadow: 0 0 12px grey;" class="img-thumbnail">
+            </div>
+            <div class="card-body pt-6">
+                <div class="text-center">
+                    <h5 class="h3 mt-5 kieu_chu">{{name}}</h5>
+                    <span class="heading kieu_chu {{user_css}} " rel="tooltip" title="{{buff_level}} {% if vip_time%} <br> {{vip_time}} {% endif %}">{{level_name}}</span>
+                </div>
+                <div class="card-profile-stats d-flex justify-content-center">
+                    <div>
+                        {% if name_music  and name_music != "None" %}
+                            <span><marquee style="width:70%;">{{ name_music }}</marquee></span><br>
+                        {% endif %}
+                        {% if url_music and url_music != "static/img/brand/logo.png" %}                        
+                            <button class="btn btn-sm btn-info mb-1" onclick="playVid()" ><i class="ni ni-button-play"></i></button><button class="btn btn-sm btn-danger mb-1" onclick="pauvid()" ><i class="ni ni-button-pause"></i></button><br>
+                        {% endif %}
+                        {% if des and des != "None" %}
+                            <span class="h4 mb-1">{{ des|safe }}</span>
+                            <br>
+                        {% endif %}
+                        <button class="btn btn-info" onclick="friend_list( {{request.user.id}} )">Bạn bè  ({{friends|length}})</button>
+                        <button class="btn btn-default" onclick="friend_request_list()">Yêu cầu kết bạn  ({{friend_requests|length}})</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card khong_mau">
+                <div id="errors pl-2 pr-2">
+                    {% for message in messages %}
+                        {% if message.tags == "error" %}
+                            <div class="alert alert-danger p-2 mt-1 ml-1 mr-1">{{message}}</div>
+                        {% else %}
+                            <div {% if message.tags %} class="alert alert-{{ message.tags }} p-2 p-2 mt-1 ml-1 mr-1"{% endif %} >{{message}}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            <div class="card-body menu-profile">
+                <script>
+                    menu_profile();
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <!-- Progress track -->
+        <div class="card khong_mau">
+            <div class="card-body">
+                <div class="row">
+                    <div class="progress-wrapper col-12">
+                        <div class="progress-info">
+                            <div class="progress-label">
+                                <div>Exp: <span>Task completed</span></div>
+                            </div>
+                            <div class="progress-percentage">
+                                    <span>60%</span>
+                            </div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-default" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,60 @@
+{% extends 'layouts/app.html' %}
+{% block title %}Đăng ký{% endblock title %}
+{% block content %}
+    <!-- Table -->
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card bg-secondary shadow border-0">
+                <div class="card-body px-lg-5 py-lg-5">
+                    <form role="form" method="POST" action="{% url 'register' %}" enctype='multipart/form-data' autocomplete="off">
+                        {% csrf_token %}
+                            <!-- Error messaging -->
+                            <div id="errors">
+                                {% if form.errors %}
+                                    {% for field in form %}
+                                        {% if field.errors %}<div class="alert alert-danger" role="alert">{{ field.errors|striptags }}</div>{% endif %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <!-- /Error messaging -->
+                        <div class="form-group ">
+                            <div class="input-group input-group-alternative mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                                </div>
+                                <input class="form-control" placeholder="Tên" type="text" name="name" required autofocus>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group input-group-alternative mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                </div>
+                                <input class="form-control" placeholder="Email" type="email" name="email"  required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                </div>
+                                <input class="form-control" placeholder="Mật khẩu" type="password" name="password1" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group input-group-alternative">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                </div>
+                                <input class="form-control" placeholder="Xác nhận mật khẩu" type="password" name="password2" required>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary mt-4">Tạo tài khoản</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

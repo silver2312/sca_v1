@@ -1,0 +1,421 @@
+.loader {
+    border: 3px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 3px solid #000000;
+    width: 20px;
+    height: 20px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+    margin-top:10px;
+    margin-bottom: 10px;
+  }
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+.pointer{
+    cursor: pointer;
+}
+.checked {
+  color: orange;
+}
+.my-btn {
+    background-color: inherit !important;
+    border: 0 !important;
+}
+.wrd{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+.img_custom{
+    height:236px;
+}
+@media (max-width: 479px) {
+    .img_custom{
+        height:140px;
+    }
+}
+.table td, .table th{
+    white-space:inherit;
+}
+title{
+    text-transform: capitalize;
+    display: block;
+}
+.khong_mau{
+    background-color:rgba(255, 255, 255, 0.6) !important;
+}
+@font-face {
+    font-family:thu_phap1;
+    src:url('../fonts/SVN-Diablo.otf') format('truetype');
+    font-weight:normal;
+    font-style:normal;
+}
+/* .table.dataTable tbody tr{
+    background-color:#1c345d !important;
+} */
+.counter-title {
+    font-size: 12px;
+    text-transform: uppercase
+}
+.kieu_chu{
+    font-size: 22px;
+    white-space: nowrap;
+    font-weight: 900;
+    font-family:thu_phap1;
+    text-transform: uppercase;
+}
+.switch_color{
+    background-color:rgb(0, 0, 0) !important;
+    color: silver !important;
+}
+.switch_color_1{
+    background:rgb(0, 0, 0) !important;
+    color: silver !important;
+}
+#phongto {
+    transition: all 1s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    z-index: 100;
+}
+
+#phongto:hover {
+    transform: scale(2,2);
+    -webkit-transform: scale(2,2);
+    -moz-transform: scale(2,2);
+    -o-transform: scale(2,2);
+    -ms-transform: scale(2,2);
+}
+/* Cầu vồng lv100 */
+/* @-webkit-keyframes cau_vong { 0% { color: blue; } 25%{color:Pink;} 50% { color: red;  } 75%{color: purple;} 100% { color: cyan;  } }
+@-moz-keyframes cau_vong { 0% { color: blue; } 25%{color:Pink;} 50% { color: red;  } 75%{color: purple;} 100% { color: cyan;  } }
+@-o-keyframes cau_vong { 0% { color: blue; } 25%{color:Pink;} 50% { color: red;  } 75%{color: purple;} 100% { color: cyan;  } } */
+@keyframes cau_vong { 0% { color: blue; } 25%{color:Pink;} 50% { color: red;  } 75%{color: purple;} 100% { color: cyan;  } }
+.cau_vong_nhap_nhay {
+    /* -webkit-animation: cau_vong 2000ms infinite;
+    -moz-animation: cau_vong 2000ms infinite;
+    -o-animation: cau_vong 2000ms infinite; */
+    animation: cau_vong 2000ms infinite;
+    color:black;
+    text-shadow: 0 0px 8px rgb(255, 2, 2);
+}
+/* Màu đỏ nhấp nháy*/
+@keyframes do { 0% { color: red;  } 50% { color: #fff;  }100% { color: #ff7300;  } }
+.mau_do_nhap_nhay {
+    animation: do 4000ms infinite;
+    color:black;
+    text-shadow: 0 0px 8px rgb(255, 2, 2);
+}
+/* Màu tím nhấp nháy*/
+@keyframes tim { 0% { color: rgb(195, 0, 255);  } 50% { color: #fff;  }100% { color: #650af8;  } }
+.mau_tim_nhap_nhay {
+    animation: tim 4000ms infinite;
+    color:black;
+    text-shadow: 0 0px 8px rgb(234, 2, 255);
+}
+/* Màu xanh lá nhấp nháy*/
+@keyframes xanh_la { 0% { color: rgb(0,255,0);  } 50% { color: #fff;  }100% { color: #09f593;  } }
+.mau_xanh_la_nhap_nhay {
+    animation: xanh_la 4000ms infinite;
+    color:black;
+    text-shadow: 0 0px 8px rgb(0,255,0);
+}
+/* Màu nâu nhấp nháy*/
+@keyframes nau { 0% { color: rgb(222,184,135)	;  } 50% { color: #fff;  }100% { color: #7f8381;  } }
+.mau_nau_nhap_nhay {
+    animation: nau 4000ms infinite;
+    color:black;
+    text-shadow: 0 0px 8px rgb(222,184,135)	;
+}
+/* Màu cam nhấp nháy*/
+@keyframes cam { 0% { color: rgb(255,127,80)		;  } 50% { color: #fff;  }100% { color: rgb(100,149,137);  } }
+.mau_cam_nhap_nhay {
+    animation: cam 4000ms infinite;
+    color:black;
+    text-shadow: 0 0px 8px rgb(255,127,80)		;
+}
+/* Màu xanh da trời nhấp nháy*/
+@keyframes xanh_troi { 0% { color: rgb(127,255,212)	;  } 50% { color: #fff;  }100% { color: #09f5ce;  } }
+.mau_xanh_troi_nhap_nhay {
+    animation: xanh_troi 4000ms infinite;
+    color:black;
+    text-shadow: 0 0px 8px rgb(127,255,212)	;
+}
+/* Màu xanh dương nhấp nháy*/
+@keyframes xanh_duong { 0% { color: rgb(0,255,255);  } 50% { color: #fff;  }100% { color: #338d7e;  } }
+.mau_xanh_duong_nhap_nhay {
+    animation: xanh_duong 4000ms infinite;
+    color:black;
+    text-shadow: 0 0px 8px rgb(0,255,255);
+}
+/* Màu xám nhấp nháy*/
+@keyframes xam { 0% { color: rgb(95, 95, 95);  } 50% { color: #fff;  }100% { color: #5a3e1f;  } }
+.mau_xam_nhap_nhay {
+    animation: xam 4000ms infinite;
+    color:black;
+    text-shadow: 0 0px 8px rgb(75, 75, 75);
+}
+/* Màu vang nhấp nháy*/
+@keyframes vang { 0% { color: rgb(251, 255, 0);  } 50% { color: #fff;  }100% { color: #ffd17c;  } }
+.mau_vang_nhap_nhay {
+    animation: vang 4000ms infinite;
+    color:black;
+    text-shadow: 0 0px 8px rgb(129, 129, 129);
+}
+
+/* bóng dưới chữ */
+.mau_do{
+    color:black;
+    text-shadow: 0 0px 8px rgb(255, 2, 2);
+}
+.mau_tim{
+    color:black;
+    text-shadow: 0 0px 8px rgb(255, 2, 221);
+}
+.mau_xanh_la_cay{
+    color:black;
+    text-shadow: 0 0px 8px rgb(2, 255, 44);
+}
+.mau_xanh_nuoc_bien{
+    color:black;
+    text-shadow: 0 0px 8px rgb(2, 217, 255);
+}
+.mau_xam{
+    color:black;
+    text-shadow: 0 0px 8px rgb(65, 66, 65);
+}
+.mau_vang{
+    color:black;
+    text-shadow: 0 0px 8px rgb(208, 255, 0);
+}
+.mau_cam{
+    color:black;
+    text-shadow: 0 0px 8px rgb(255,127,80)	;
+}
+
+/* nhấp nháy có ảnh nền */
+.anh_hong3{
+    background:url("../img/gif/3n5UtzU.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_tim3{
+    background:url("../img/gif/qrqTlrx.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_xam2{
+    background:url("../img/gif/QnruOhz.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_luc2{
+    background:url("../img/gif/YIKnKCo.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_lam2{
+    background:url("../img/gif/caIk0LY.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_tim2{
+    background:url("../img/gif/FhyTc8S.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_vang2{
+    background:url("../img/gif/UMfl0CA.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_cam2{
+    background:url("../img/gif/mqxhvV2.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_do2{
+    background:url("../img/gif/xBKUrnA.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+
+.anh_xam1{
+    text-shadow: 0 0px 8px rgb(154, 158, 158);
+    background:url("../img/gif/7qcgiL7.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_luc1{
+    text-shadow: 0 0px 8px rgb(52, 189, 39);
+    background:url("../img/gif/6Nfydu2.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_lam1{
+    text-shadow: 0 0px 8px rgb(60, 182, 212);
+    background:url("../img/gif/h9iTcde.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_tim1{
+    text-shadow: 0 0px 8px rgb(202, 58, 207);
+    background:url("../img/gif/tEOckTE.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_do1{
+    text-shadow: 0 0px 8px rgb(187, 58, 58);
+    background:url("../img/gif/20zmyR6.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+
+.anh_xam{
+    text-shadow: 0 0px 8px rgb(75, 75, 75);
+    background:url("../img/gif/CWyp5TY.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_luc{
+    text-shadow: 0 0px 8px rgb(15, 238, 115);
+    background:url("../img/gif/0dJbohl.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_lam{
+    text-shadow: 0 0px 8px rgb(17, 166, 224);
+    background:url("../img/gif/0pwz0xR.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_tim{
+    text-shadow: 0 0px 8px rgb(216, 39, 186);
+    background:url("../img/gif/aT3EeOj.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_vang{
+    text-shadow: 0 0px 8px rgb(199, 207, 80);
+    background:url("../img/gif/qh70WrV.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_do{
+    text-shadow: 0 0px 8px rgb(248, 51, 51);
+    background:url("../img/gif/dkRzgMD.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+.anh_nhieu_mau{
+    text-shadow: 0 0px 8px rgb(133, 100, 170);
+    background:url("../img/gif/B3zV44K.gif");
+    -webkit-background-clip: text;
+    background-clip: text;
+    color:transparent;
+    background-position:center;
+    background-size:contain;
+}
+
+/* Chữ đỏ */
+.chu_do{
+    color:red;
+}
+.chu_cam{
+    color:rgb(255, 145, 0);
+}
+.chu_vang{
+    color:rgb(255, 238, 0);
+}
+.chu_tim{
+    color:rgb(185, 79, 218);
+}
+.chu_duong{
+    color: skyblue;
+}
+.chu_cyan{
+    color:cyan;
+}
+.chu_luc{
+    color:rgb(9, 255, 0);
+}
+.chu_xanh_ma{
+    color:rgb(168, 231, 67);
+}
+.chu_nau{
+    color:rgb(139,69,19);
+}
+.chu_xam{
+    color:silver;
+}

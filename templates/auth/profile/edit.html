@@ -1,0 +1,39 @@
+<div class="container">
+    <button class="btn btn-sm btn-default ml-2" onclick="menu_profile()"><i class="ni ni-bold-left"></i></button>
+    <div class="row mt-2">
+        <div class="col-12">
+            <form role="form" method="POST" action="{% url 'edit_account' %}" enctype='multipart/form-data'>
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-12">
+                        <label for="gioi_thieu_profile">Giới thiệu</label>
+                        <textarea class="form-control" maxlength="255" id="gioi_thieu_profile" name="des">{{ des }}</textarea>
+                    </div>
+                    {% if ngan_te and ngan_te >= 1000 %}
+                    <div class="form-group col-md-6">
+                        <label for="name">Tên</label>
+                        <input type="text" maxlength="30" class="form-control" id="name" name="name" value="{{ name }}">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="profile_image">Ảnh đại diện</label>
+                        <input type="file" accept="image/png, image/gif, image/jpeg" class="form-control-file" id="profile_image" name="profile_image">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="background_image">Ảnh bìa</label>
+                        <input type="file" accept="image/png, image/jpeg" class="form-control-file" id="background_image" name="background_image">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="name_music">Tên nhạc</label>
+                        <input type="text" maxlength="30" class="form-control" id="name_music" name="name_music" value="{{ name_music }}" placeholder="Nhập tên nhạc">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="url_music">File nhạc</label>
+                        <input type="file" accept="audio/mp3" id="url_music" class="form-control-file" name="url_music">
+                    </div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-primary">Gửi</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+{% extends 'layouts/app.html' %}
+{% block title %}Trang chủ{% endblock title %}
+{% block content %}
+{% load book_tags %}
+{% load humanize %}
+    {% for message in messages %}
+        {% if message.tags == "error" %}
+            <div class="alert alert-danger p-2 mt-1 ml-1 mr-1">{{message}}</div>
+        {% endif %}
+    {% endfor %}
+    <div id="carousel_index">
+    </div>
+    <hr>
+    <div id="new-book-home">
+        <div class="nav-wrapper">
+            <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="ni ni-watch-time mr-2"></i>Truyện Mới cập nhật</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="ni ni-world-2 mr-2"></i>Truyện mới đăng</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="ni ni-check-bold mr-2"></i>Truyện đã hoàn thành</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+                        {% if update %}
+                                {% for u in update %}
+                                    <div class="card">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <a href="/b/{{ u.url|g_host }}/{{ u.url|get_host_id }}/"><img src="/{{u.image}}" class="card-img-top p-1 rounded" alt="{{ u.title|trans_text }}" style="height:110px;" onerror="this.src='https://i.imgur.com/hQRlkUR.png';"></a>
+                                            </div>
+                                            <div class="card-body col-10" style="flex:none;">
+                                                <span class="font-weight-bold wrd">{{ u.title|trans_text }}</span>
+                                                <small class="wrd" >{{ u.user.name|title }}</small>
+                                                <small class="wrd text-muted">{{ u.author|trans_author }} - {{ u.date_update|naturaltime }}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
+                        <p class="description">Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+                    </div>
+                    <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+                        <p class="description">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% block js %}
+    <script>
+        function home_bk_de_cu(){
+            $.get("/b/de-cu/", function(data, status){
+                $('#carousel_index').html(data);
+            });
+        }
+        home_bk_de_cu();
+    </script>
+{% endblock %}
