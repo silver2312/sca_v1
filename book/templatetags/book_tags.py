@@ -17,7 +17,12 @@ def trans_authr(txt):
 register.filter("trans_author", trans_authr)
 
 def trans_des(txt):
-    trans = trans_for_text(txt).get_text('<br><br>')
+    txt = txt.replace('    ','')
+    txt = txt.replace('   ','')
+    txt = txt.replace('  ','')
+    txt = txt.replace(' ','')
+    txt = txt.replace('。','.<br>')
+    trans = trans_for_text(txt).get_text("<br>")
     return trans
 register.filter("trans_des", trans_des)
     
@@ -36,6 +41,7 @@ register.filter("check_url", check_url)
 
 def g_host(url):
     host = get_hostbk(url)
+    return host
 register.filter("g_host", g_host)
 
 def get_host_id(url):

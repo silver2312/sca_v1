@@ -1,4 +1,5 @@
 import os, requests, json
+import re
 from re import sub
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -112,10 +113,7 @@ class Book(models.Model):
             if self.chapter:
                 url = 'https://www.uuxs.com/catalog/'+id
                 soup = request_url(url)
-                sub_soup =request_url('http://vietphrase.info/VietPhrase/Browser?url='+url+'&script=false&t=VP')
                 list_chap = soup.select('#__layout > div > div:nth-child(2) > div.frame_body > div.chapters_frame > div > div > a')
-                sub_list = sub_soup.select('#__layout > div > div:nth-child(2) > div.frame_body > div.chapters_frame > div > div > a')
-                list_all = zip(list_chap,sub_list)
                 try:
                     f = open(self.chapter.path ,encoding='utf-8')
                     data = json.load(f)
@@ -123,19 +121,33 @@ class Book(models.Model):
                 except:
                     lenght = 0
                     data = []
-                for val,value in list_all:
-                    title = val.get_text()
-                    sub_title = value.get_text()
+                for val in list_chap:
+                    txt = val.get_text()
+                    arr = list(txt)
+                    a = 0
+                    for i in range(len(arr)):
+                        if arr[i] == "章":
+                            a = i+1
+                            break
+                        if arr[i] == " ":
+                            a = i+1
+                            break
+                    sl = arr[a:]
+                    title= ""
+                    for s in sl:
+                        title+=s
+                    sub_title = None
                     url = val.attrs['href']
+                    content = None
                     if lenght == 0:
-                        data.append( { 'title':title, 'url':url } )
+                        data.append( { 'title':title, 'url':url, 'sub_title':sub_title,'content':content } )
                     else:
                         check = 0
                         for d in data:
                             if d['url'] == url:
                                 check = 1
                         if check == 0:
-                            data.append( { 'title':title, 'url':url } )
+                            data.append( { 'title':title, 'url':url, 'sub_title':sub_title,'content':content } )
                 if len(list_chap) > self.chapter.size:
                     with open(self.chapter.path, 'w', encoding='utf8') as s:
                         json.dump(data,s, indent=4, sort_keys=True, ensure_ascii=False)
@@ -144,6 +156,58 @@ class Book(models.Model):
                 return False
         else:
             return False
+    def get_sub_title(self):
+        if self.chapter :
+            try:
+                f = open(self.chapter.path ,encoding='utf-8')
+                data = json.load(f)
+                lenght = len(data)
+                for x in range(lenght):
+                    if data[x]["sub_title"] is None:
+                        data[x]["sub_title"] = trans_for_text(data[x]["title"]).get_text()
+                        with open(self.chapter.path, 'w', encoding='utf8') as s:
+                            json.dump(data,s, indent=4, sort_keys=True, ensure_ascii=False)
+            except:
+                return False
+    def get_content_chapter(self):
+        host_list = [ "uuxs" ]
+        host = get_hostbk(self.url)
+        if self.chapter and host in host_list:
+            try:
+                f = open(self.chapter.path ,encoding='utf-8')
+                data = json.load(f)
+                lenght = len(data)
+                for x in range(lenght):
+                    if data[x]["content"] is None:
+                        if host == "uuxs":
+                            soup = request_url('https://www.uuxs.com'+data[x]['url'])
+                            data[x]["content"] = soup.select_one('#__layout > div > div:nth-child(2) > div.frame_body > div.content').get_text('<br><br>').replace("&nbsp;", "")
+                        with open(self.chapter.path, 'w', encoding='utf8') as s:
+                            json.dump(data,s, indent=4, sort_keys=True, ensure_ascii=False)
+            except:
+                return False
+    def get_content_id(self,id_chap):
+        host_list = [ "uuxs" ]
+        host = get_hostbk(self.url)
+        context = {}
+        if self.chapter and host in host_list:
+            try:
+                f = open(self.chapter.path ,encoding='utf-8')
+                data = json.load(f)
+                lenght = len(data)
+                if id_chap > lenght:
+                    return False
+                if data[id_chap]["content"] is None:
+                    if host == "uuxs":
+                        soup = request_url('https://www.uuxs.com'+data[id_chap]['url'])
+                        data[id_chap]["content"] = soup.select_one('#__layout > div > div:nth-child(2) > div.frame_body > div.content').get_text('<br><br>').replace("&nbsp;", "")
+                    with open(self.chapter.path, 'w', encoding='utf8') as s:
+                        json.dump(data,s, indent=4, sort_keys=True, ensure_ascii=False)
+                context['content'] = data[id_chap]["content"]
+                context['sub_title'] = data[id_chap]['title']
+                return context
+            except:
+                return False
     
 class GiftList(models.Model):
     book = models.IntegerField(verbose_name="Truyện")

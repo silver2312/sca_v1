@@ -151,9 +151,14 @@ $(document).ready(function(){
 function scroltoView(){
     var a = $('#my_chapter');
     if(a){
+        try {
         $([document.documentElement, document.body]).animate({
-            scrollTop: $(a).offset().top - 300
-        }, 200);
+                scrollTop: $(a).offset().top - 300            
+            }, 200);
+        }
+        catch(err) {
+            console.log("Lỗi di chuyển đến trang đang đọc")
+        }
     }
 
 }

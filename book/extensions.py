@@ -63,8 +63,25 @@ def trans_author(txt):
         return 0
 
 def get_hostbk(url):
-    if url.find("uuxs") > 0:
+    if re.findall("uuxs",url):
         host = "uuxs"
     else:
         host = url
     return host
+
+def about_bk(url):
+    host = get_hostbk(url)
+    context = {}
+    host_list = [ "uuxs" ]
+    if host in host_list:
+        soup = request_url(url)
+        if host == "uuxs":
+            title = soup.select_one('#__layout > div > div:nth-child(2) > div.frame_body > div.pure-g.novel_info > div.pure-u-xl-5-6.pure-u-lg-5-6.pure-u-md-2-3.pure-u-1-2 > ul > li:nth-child(1) > h1').get_text().replace(' ','')
+            author = soup.select_one('#__layout > div > div:nth-child(2) > div.frame_body > div.pure-g.novel_info > div.pure-u-xl-5-6.pure-u-lg-5-6.pure-u-md-2-3.pure-u-1-2 > ul > li:nth-child(2) > a').get_text().replace(' ','')
+            des = soup.select_one('#__layout > div > div:nth-child(2) > div.frame_body > div.description > div').get_text('<br>').replace(' ','')
+            context['title'] = title
+            context['author'] = author
+            context['des'] = des
+            return context
+        return False
+    return False

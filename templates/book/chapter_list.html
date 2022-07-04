@@ -3,16 +3,16 @@
     <div class="row">
         {% for x,val in data %}
             <div  class="col-md-4 text-left">
-            {% if x <= 100 %}
-                <h4 class="border-bottom pl-1" style="color:#e1e1e1;" {% if x == 100 %}  id="my_chapter" {% endif %}>
+            {% if x <= last_read %}
+                <h4 class="border-bottom pl-1" style="color:#e1e1e1;" {% if x == last_read %}  id="my_chapter" {% endif %}>
             {% else %}
                 <h4 class="border-bottom pl-1">
             {% endif %}
                     <a href="/b/{{ url|g_host }}/{{ url|get_host_id }}/{{x}}/" class="wrd">
                         {% if val.sub_title %}
-                            <span rel="tool-tip" data-placement="bottom" title="{{ val.sub_title }}">{{ val.sub_title }}</span>
+                            <span rel="tool-tip" data-placement="bottom" title="{{ val.sub_title }}">Chương {{x}}: {{ val.sub_title }}</span>
                         {% else %}
-                            <span rel="tool-tip" data-placement="bottom" title="{{ val.title }}">{{ val.title }}</span>
+                            <span rel="tool-tip" data-placement="bottom" title="{{ val.title }}">Chương {{x}}: {{ val.title }}</span>
                         {% endif %}
                     </a>
                 </h4>

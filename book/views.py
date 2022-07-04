@@ -1,7 +1,7 @@
 import json
 from multiprocessing import context
 from .models import Book, Rating
-from .extensions import check_url, trans_for_text, trans_author, request_url
+from .extensions import check_url, trans_for_text, trans_author, request_url, get_hostbk, about_bk
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.http import HttpResponse
@@ -21,6 +21,9 @@ def home(request, host,host_id):
         bk = Book.objects.filter(url = url).first()
     else:
         bk = Book.objects.filter(id=host_id).filter(url=host).first()
+    if not bk:
+        messages.error(request, 'Web chưa có truyện này.')
+        return redirect("home")
     rt = Rating.tong(bk.id)
     context = {
         'id' : bk.id,
@@ -34,6 +37,7 @@ def home(request, host,host_id):
         'status' : bk.get_trang_thai_display(),
         'rating' : rt,
         'user_post':bk.user,
+        'url': bk.url
     }
     if user.is_authenticated:
         rt_check = Rating.objects.filter(book=bk.id).filter(user=user.id)
@@ -49,22 +53,22 @@ def search(request):
     if request.method == "GET":
         key = request.GET['key']
         if check_url(key):
-            host = key.split(".")[1]
+            host = get_hostbk(key)
             appect_host = ['uuxs','writter','convert']
             if not host in appect_host:
                 messages.error(request, 'Nguồn này web chưa hỗ trợ nhé.')
                 return redirect("home")
             check = Book.objects.filter(url = key).first()
             if check:
-                return redirect('book_home',host= key.split(".")[1], host_id=key.split("/")[4])
+                return redirect('book_home',host= host, host_id=key.split("/")[4])
             if host == "uuxs":
-                soup = request_url(key)
-                title = soup.select_one('#__layout > div > div:nth-child(2) > div.frame_body > div.pure-g.novel_info > div.pure-u-xl-5-6.pure-u-lg-5-6.pure-u-md-2-3.pure-u-1-2 > ul > li:nth-child(1) > h1').get_text()
-                author =soup.select_one('#__layout > div > div:nth-child(2) > div.frame_body > div.pure-g.novel_info > div.pure-u-xl-5-6.pure-u-lg-5-6.pure-u-md-2-3.pure-u-1-2 > ul > li:nth-child(2) > a').get_text()
-                des = soup.select_one('#__layout > div > div:nth-child(2) > div.frame_body > div.description > div').get_text('<br>')
+                soup = about_bk(key)
+                title = soup['title']
+                author =soup['author']
+                des = soup['des']
             b = Book.objects.create(title= title, author=author, des = des, user=request.user,url=key)
             b.save()
-            return redirect('book_home',host= key.split(".")[1], host_id=key.split("/")[4])
+            return redirect('book_home',host= host, host_id=key.split("/")[4])
         else:
             check = Book.objects.all()
             id_b = []
@@ -120,20 +124,78 @@ def de_cu(request):
 
 def chapter_list(request, bk_id):
     context = {}
+    payload = ""
     try:
         bk = Book.objects.filter(id=bk_id).first()
-        f = open(bk.chapter.path, encoding='utf-8')
-        data = json.load(f)
-        length = len(data)
-        context['url'] = bk.url
+        if bk.trang_thai > 0:
+            f = open(bk.chapter.path, encoding='utf-8')
+            data = json.load(f)
+            length = len(data)
+            context['url'] = bk.url
+            try:
+                bk.get_sub_title()
+                payload += "Đã check sub chương truyện "+ trans_for_text(bk.title).get_text()+"<br>"
+            except:
+                payload += "Có lỗi xảy ra khi check sub chương truyện "+ trans_for_text(bk.title).get_text()+"<br>"
+        else:
+            data = []
+            length = 0
     except:
         data = []
         length = 0
+    last_read = 100
+    if last_read <= length:
+        context['last_read'] = last_read
+    else:
+        context['last_read'] = 0
     context['data'] = zip(range(length),data)
     return render(request, 'book/chapter_list.html', context)
 
 def data_chap(request,host,host_id,chap_id):
-    return 0
+    user = request.user
+    context = {}
+    appect_host = ['uuxs','writter','convert']
+    if not host in appect_host:
+        messages.error(request, 'Nguồn này web chưa hỗ trợ nhé.')
+        return redirect("home")
+    if host == "uuxs":
+        url = "https://www.uuxs.com/book/" + str(host_id) + "/"
+        bk = Book.objects.filter(url = url).first()
+    else:
+        bk = Book.objects.filter(id=host_id).filter(url=host).first()
+    if not bk:
+        messages.error(request, 'Web chưa có truyện này.')
+        return redirect("home")
+    context['title'] = bk.title
+    arr = bk.get_content_id(chap_id)
+    if user.is_authenticated:
+        context['content'] = arr["content"]
+    else:
+        context['content'] = "Bạn phải đăng nhập để đọc truyện!"
+    context['sub_title'] = arr['sub_title']
+    context['author'] = bk.author
+    context['user_post'] = bk.user.name
+    context['x'] = chap_id
+    try:
+        f = open(bk.chapter.path ,encoding='utf-8')
+        data = json.load(f)
+        lenght = len(data)
+    except:
+        lenght = 0
+    max_c = max(range(lenght))
+    if chap_id > 0:
+        pre_c = chap_id - 1
+    else:
+        pre_c = -1
+    if chap_id < max_c:
+        next_c = chap_id + 1
+    else:
+       next_c = -1
+    context['pre_c'] = pre_c
+    context['next_c'] = next_c
+    context['host'] = host
+    context['host_id'] = host_id
+    return render(request, 'book/content.html', context)
 
 def check_all(request,id):
     payload = ""
@@ -155,3 +217,20 @@ def check_all(request,id):
         except:
             payload += "Có lỗi xảy ra khi check chương truyện "+ trans_for_text(b.title).get_text()+"<br>"
     return HttpResponse(payload)
+def check_content(request):
+    payload = ""
+    if request.method == "POST":
+        id = request.POST['id']
+        b = Book.objects.filter(id = id).first()
+        if b.trang_thai > 0:
+            try:
+                b.get_content_chapter()
+                payload += "Đã cập nhật nội dung chương mới nhất!"
+            except:
+                payload += "Có lỗi xảy ra!"
+        else:
+            payload += "Truyện chưa được duyệt"
+    else:
+        payload += "Sai phương thức nhập!"
+    return HttpResponse(payload)
+

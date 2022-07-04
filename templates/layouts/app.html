@@ -4,9 +4,7 @@
 <html lang="vi">
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
-		<meta name="author" content="Creative Tim">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">		
 		<title>{% block title %}{% endblock %} - MyScáthach</title>
     	<meta name="propeller" content="7db7dd4ed88fc56634c8b3c6ca9220c9">
 		<!-- Favicon -->
@@ -34,6 +32,7 @@
 	
 			gtag('config', 'G-JLBRQ1EFFM');
 		</script> {% endcomment %}
+		{% csrf_token %}
 	</head>
 	<body>
 		<div class="main-content" id="panel">

@@ -8,5 +8,6 @@ urlpatterns = [
     path('de-cu/',views.de_cu,name="home_bk_de_cu"),
     path('chap/list/<int:bk_id>/', views.chapter_list, name="chapter_list"),
     path('check/all/<int:id>/',views.check_all,name="check-all-book"),
-    path('<str:host>/<int:host_id>/<int:chap_id>', views.data_chap, name='data_chap'),
+    path('<str:host>/<int:host_id>/<int:chap_id>/', views.data_chap, name='data_chap'),
+    path('check-content/',views.check_content,name="check-content-book"),
 ]

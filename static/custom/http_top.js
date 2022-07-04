@@ -19,3 +19,22 @@ function scrolltop(){
         scrollTop: 0
     }, 200);
 }
+
+function check_content_book(id) {
+    const csrf = document.getElementsByName('csrfmiddlewaretoken')
+    const btn = document.getElementById('check_content_book')
+    btn.value="Đang cập nhật...";
+    data = {
+        'id' :id,
+        'csrfmiddlewaretoken': csrf[0].value,
+    }
+    $.ajax({
+        type: 'POST',
+        url: "/b/check-content/",
+        data: data,
+        success: function (data) {
+            alert(data)
+            btn.value="Cập nhật nội dung chương";
+        }
+    });
+}
