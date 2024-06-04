@@ -1,19 +1,18 @@
 {
   "Alas": {
     "Emulator": {
-      "Serial": "emulator-5554",
+      "Serial": "192.168.57.102:5555",
       "PackageName": "com.YoStarEN.AzurLane",
       "ServerName": "en-4",
-      "ScreenshotMethod": "aScreenCap_nc",
+      "ScreenshotMethod": "DroidCast_raw",
       "ControlMethod": "minitouch",
       "ScreenshotDedithering": true,
       "AdbRestart": true
     },
-    "RestartEmulator": {
-      "Enable": false,
-      "EmulatorData": "emulator:\nname:\npath:",
-      "ErrorRestart": false,
-      "DailyRestart": false
+    "EmulatorInfo": {
+      "Emulator": "auto",
+      "name": null,
+      "path": null
     },
     "Error": {
       "HandleError": false,
@@ -44,7 +43,7 @@
   },
   "General": {
     "Retirement": {
-      "RetireMode": "enhance"
+      "RetireMode": "one_click_retire"
     },
     "OneClickRetire": {
       "KeepLimitBreak": "do_not_keep"
@@ -68,7 +67,7 @@
   "Restart": {
     "Scheduler": {
       "Enable": true,
-      "NextRun": "2024-03-20 14:00:00",
+      "NextRun": "2024-06-04 14:00:00",
       "Command": "Restart",
       "SuccessInterval": 0,
       "FailureInterval": 0,
@@ -81,14 +80,14 @@
   "Main": {
     "Scheduler": {
       "Enable": true,
-      "NextRun": "2024-03-20 06:06:00",
+      "NextRun": "2024-06-04 05:36:00",
       "Command": "Main",
       "SuccessInterval": 0,
       "FailureInterval": 120,
       "ServerUpdate": "00:00"
     },
     "Campaign": {
-      "Name": "2-1",
+      "Name": "3-1",
       "Event": "campaign_main",
       "Mode": "normal",
       "UseClearMode": true,
@@ -98,8 +97,8 @@
       "AmbushEvade": false
     },
     "StopCondition": {
+      "OilLimit": 1000,
       "RunCount": 0,
-      "OilLimit": 5000,
       "MapAchievement": "non_stop",
       "StageIncrease": false,
       "GetNewShip": false,
@@ -110,11 +109,11 @@
       "Fleet1Formation": "double_line",
       "Fleet1Mode": "combat_auto",
       "Fleet1Step": 3,
-      "Fleet2": 5,
+      "Fleet2": 0,
       "Fleet2Formation": "double_line",
       "Fleet2Mode": "combat_auto",
       "Fleet2Step": 2,
-      "FleetOrder": "fleet1_mob_fleet2_boss"
+      "FleetOrder": "fleet1_all_fleet2_standby"
     },
     "Submarine": {
       "Fleet": 0,
@@ -125,12 +124,12 @@
     "Emotion": {
       "Mode": "calculate",
       "Fleet1Value": 31,
-      "Fleet1Record": "2024-03-20 05:57:01",
+      "Fleet1Record": "2024-06-04 05:16:47",
       "Fleet1Control": "prevent_yellow_face",
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
-      "Fleet2Value": 65,
-      "Fleet2Record": "2024-03-20 05:57:01",
+      "Fleet2Value": 119,
+      "Fleet2Record": "2024-06-04 05:16:47",
       "Fleet2Control": "prevent_red_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false
@@ -172,8 +171,8 @@
       "AmbushEvade": true
     },
     "StopCondition": {
-      "RunCount": 0,
       "OilLimit": 10000,
+      "RunCount": 0,
       "MapAchievement": "non_stop",
       "StageIncrease": false,
       "GetNewShip": false,
@@ -246,8 +245,8 @@
       "AmbushEvade": true
     },
     "StopCondition": {
-      "RunCount": 0,
       "OilLimit": 1000,
+      "RunCount": 0,
       "MapAchievement": "map_3_stars",
       "StageIncrease": false,
       "GetNewShip": false,
@@ -303,7 +302,7 @@
   "GemsFarming": {
     "Scheduler": {
       "Enable": false,
-      "NextRun": "2024-03-03 19:26:10",
+      "NextRun": "2024-06-04 05:12:52",
       "Command": "GemsFarming",
       "SuccessInterval": 0,
       "FailureInterval": 120,
@@ -311,8 +310,9 @@
     },
     "GemsFarming": {
       "ChangeFlagship": "ship",
-      "ChangeVanguard": "disabled",
       "CommonCV": "any",
+      "ChangeVanguard": "disabled",
+      "CommonDD": "any",
       "CommissionLimit": true
     },
     "Campaign": {
@@ -326,8 +326,8 @@
       "AmbushEvade": true
     },
     "StopCondition": {
-      "RunCount": 0,
       "OilLimit": 10000,
+      "RunCount": 0,
       "MapAchievement": "non_stop",
       "StageIncrease": false,
       "GetNewShip": false,
@@ -364,27 +364,27 @@
   },
   "Event": {
     "Scheduler": {
-      "Enable": false,
-      "NextRun": "2024-03-03 13:06:00",
+      "Enable": true,
+      "NextRun": "2024-06-04 07:36:34",
       "Command": "Event",
       "SuccessInterval": 0,
       "FailureInterval": 120,
       "ServerUpdate": "00:00"
     },
     "Campaign": {
-      "Name": "SP2",
-      "Event": "event_20220324_cn",
+      "Name": "B3",
+      "Event": "event_20240521_cn",
       "Mode": "normal",
-      "UseClearMode": false,
-      "UseFleetLock": false,
-      "UseAutoSearch": false,
+      "UseClearMode": true,
+      "UseFleetLock": true,
+      "UseAutoSearch": true,
       "Use2xBook": false,
       "AmbushEvade": true
     },
     "StopCondition": {
+      "OilLimit": 7000,
       "RunCount": 0,
-      "OilLimit": 1000,
-      "MapAchievement": "map_3_stars",
+      "MapAchievement": "non_stop",
       "StageIncrease": false,
       "GetNewShip": false,
       "ReachLevel": 0
@@ -397,8 +397,8 @@
       "Fleet2": 2,
       "Fleet2Formation": "double_line",
       "Fleet2Mode": "combat_auto",
-      "Fleet2Step": 2,
-      "FleetOrder": "fleet1_boss_fleet2_mob"
+      "Fleet2Step": 3,
+      "FleetOrder": "fleet1_mob_fleet2_boss"
     },
     "Submarine": {
       "Fleet": 0,
@@ -408,13 +408,13 @@
     },
     "Emotion": {
       "Mode": "calculate",
-      "Fleet1Value": 119,
-      "Fleet1Record": "2024-03-15 16:02:14",
+      "Fleet1Value": 61,
+      "Fleet1Record": "2024-06-03 22:26:45",
       "Fleet1Control": "prevent_green_face",
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
-      "Fleet2Value": 111,
-      "Fleet2Record": "2024-03-15 16:02:14",
+      "Fleet2Value": 117,
+      "Fleet2Record": "2024-06-03 22:26:45",
       "Fleet2Control": "prevent_green_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false
@@ -439,15 +439,15 @@
   "Event2": {
     "Scheduler": {
       "Enable": false,
-      "NextRun": "2024-03-11 18:56:42",
+      "NextRun": "2024-05-31 21:12:00",
       "Command": "Event2",
       "SuccessInterval": 0,
       "FailureInterval": 120,
       "ServerUpdate": "00:00"
     },
     "Campaign": {
-      "Name": "ESP",
-      "Event": "event_20220324_cn",
+      "Name": "D2",
+      "Event": "event_20240521_cn",
       "Mode": "normal",
       "UseClearMode": false,
       "UseFleetLock": false,
@@ -456,8 +456,8 @@
       "AmbushEvade": true
     },
     "StopCondition": {
+      "OilLimit": 1000,
       "RunCount": 0,
-      "OilLimit": 5000,
       "MapAchievement": "map_3_stars",
       "StageIncrease": true,
       "GetNewShip": false,
@@ -482,13 +482,13 @@
     },
     "Emotion": {
       "Mode": "calculate",
-      "Fleet1Value": 107,
-      "Fleet1Record": "2024-03-15 22:30:49",
+      "Fleet1Value": 31,
+      "Fleet1Record": "2024-05-31 21:19:54",
       "Fleet1Control": "prevent_yellow_face",
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
-      "Fleet2Value": 117,
-      "Fleet2Record": "2024-03-15 22:30:49",
+      "Fleet2Value": 119,
+      "Fleet2Record": "2024-05-31 21:19:54",
       "Fleet2Control": "prevent_yellow_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false
@@ -525,7 +525,7 @@
     },
     "Campaign": {
       "Name": "dynamic",
-      "Event": "raid_20240130",
+      "Event": "raid_20240328",
       "Mode": "normal",
       "UseClearMode": true,
       "UseFleetLock": true,
@@ -534,8 +534,8 @@
       "AmbushEvade": true
     },
     "StopCondition": {
-      "RunCount": 0,
       "OilLimit": 1000,
+      "RunCount": 0,
       "MapAchievement": "non_stop",
       "StageIncrease": false,
       "GetNewShip": false,
@@ -581,8 +581,8 @@
       "Fleet": "single"
     },
     "StopCondition": {
-      "RunCount": 0,
       "OilLimit": 1000,
+      "RunCount": 0,
       "MapAchievement": "non_stop",
       "StageIncrease": false,
       "GetNewShip": false,
@@ -641,8 +641,8 @@
       "AmbushEvade": true
     },
     "StopCondition": {
-      "RunCount": 0,
       "OilLimit": 10000,
+      "RunCount": 0,
       "MapAchievement": "map_3_stars",
       "StageIncrease": false,
       "GetNewShip": false,
@@ -697,8 +697,8 @@
   },
   "EventA": {
     "Scheduler": {
-      "Enable": false,
-      "NextRun": "2024-03-07 14:00:00",
+      "Enable": true,
+      "NextRun": "2024-06-04 14:00:00",
       "Command": "EventA",
       "SuccessInterval": 30,
       "FailureInterval": 30,
@@ -710,7 +710,7 @@
     },
     "Campaign": {
       "Name": "dynamic",
-      "Event": "event_20220324_cn",
+      "Event": "event_20240521_cn",
       "Mode": "normal",
       "UseClearMode": true,
       "UseFleetLock": true,
@@ -719,8 +719,8 @@
       "AmbushEvade": true
     },
     "StopCondition": {
-      "RunCount": 0,
       "OilLimit": 1000,
+      "RunCount": 0,
       "MapAchievement": "non_stop",
       "StageIncrease": false,
       "GetNewShip": false,
@@ -745,13 +745,13 @@
     },
     "Emotion": {
       "Mode": "calculate",
-      "Fleet1Value": 99,
-      "Fleet1Record": "2024-03-06 14:52:32",
+      "Fleet1Value": 101,
+      "Fleet1Record": "2024-06-03 21:32:04",
       "Fleet1Control": "prevent_yellow_face",
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
-      "Fleet2Value": 115,
-      "Fleet2Record": "2024-03-06 14:52:32",
+      "Fleet2Value": 117,
+      "Fleet2Record": "2024-06-03 21:32:04",
       "Fleet2Control": "prevent_yellow_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false
@@ -775,8 +775,8 @@
   },
   "EventB": {
     "Scheduler": {
-      "Enable": false,
-      "NextRun": "2024-03-07 14:00:00",
+      "Enable": true,
+      "NextRun": "2024-06-04 14:00:00",
       "Command": "EventB",
       "SuccessInterval": 30,
       "FailureInterval": 30,
@@ -788,7 +788,7 @@
     },
     "Campaign": {
       "Name": "dynamic",
-      "Event": "event_20220324_cn",
+      "Event": "event_20240521_cn",
       "Mode": "normal",
       "UseClearMode": true,
       "UseFleetLock": true,
@@ -797,8 +797,8 @@
       "AmbushEvade": true
     },
     "StopCondition": {
-      "RunCount": 0,
       "OilLimit": 1000,
+      "RunCount": 0,
       "MapAchievement": "non_stop",
       "StageIncrease": false,
       "GetNewShip": false,
@@ -823,13 +823,13 @@
     },
     "Emotion": {
       "Mode": "calculate",
-      "Fleet1Value": 117,
-      "Fleet1Record": "2024-03-06 15:23:32",
+      "Fleet1Value": 115,
+      "Fleet1Record": "2024-06-03 21:47:20",
       "Fleet1Control": "prevent_yellow_face",
       "Fleet1Recover": "not_in_dormitory",
       "Fleet1Oath": false,
-      "Fleet2Value": 93,
-      "Fleet2Record": "2024-03-06 15:23:32",
+      "Fleet2Value": 95,
+      "Fleet2Record": "2024-06-03 21:47:20",
       "Fleet2Control": "prevent_yellow_face",
       "Fleet2Recover": "not_in_dormitory",
       "Fleet2Oath": false
@@ -866,7 +866,7 @@
     },
     "Campaign": {
       "Name": "dynamic",
-      "Event": "event_20220324_cn",
+      "Event": "event_20240521_cn",
       "Mode": "normal",
       "UseClearMode": true,
       "UseFleetLock": true,
@@ -875,8 +875,8 @@
       "AmbushEvade": true
     },
     "StopCondition": {
-      "RunCount": 0,
       "OilLimit": 1000,
+      "RunCount": 0,
       "MapAchievement": "non_stop",
       "StageIncrease": false,
       "GetNewShip": false,
@@ -944,7 +944,7 @@
     },
     "Campaign": {
       "Name": "dynamic",
-      "Event": "event_20220324_cn",
+      "Event": "event_20240521_cn",
       "Mode": "normal",
       "UseClearMode": true,
       "UseFleetLock": true,
@@ -953,8 +953,8 @@
       "AmbushEvade": true
     },
     "StopCondition": {
-      "RunCount": 0,
       "OilLimit": 1000,
+      "RunCount": 0,
       "MapAchievement": "non_stop",
       "StageIncrease": false,
       "GetNewShip": false,
@@ -1018,7 +1018,7 @@
     },
     "Campaign": {
       "Name": "sp",
-      "Event": "event_20220324_cn",
+      "Event": "event_20240521_cn",
       "Mode": "normal",
       "UseClearMode": true,
       "UseFleetLock": true,
@@ -1027,8 +1027,8 @@
       "AmbushEvade": true
     },
     "StopCondition": {
-      "RunCount": 0,
       "OilLimit": 1000,
+      "RunCount": 0,
       "MapAchievement": "non_stop",
       "StageIncrease": false,
       "GetNewShip": false,
@@ -1095,7 +1095,7 @@
     },
     "Campaign": {
       "Name": "dynamic",
-      "Event": "raid_20240130",
+      "Event": "raid_20240328",
       "Mode": "normal",
       "UseClearMode": true,
       "UseFleetLock": true,
@@ -1104,8 +1104,8 @@
       "AmbushEvade": true
     },
     "StopCondition": {
-      "RunCount": 0,
       "OilLimit": 10000,
+      "RunCount": 0,
       "MapAchievement": "non_stop",
       "StageIncrease": false,
       "GetNewShip": false,
@@ -1151,8 +1151,8 @@
       "Fleet": "single"
     },
     "StopCondition": {
-      "RunCount": 0,
       "OilLimit": 1000,
+      "RunCount": 0,
       "MapAchievement": "non_stop",
       "StageIncrease": false,
       "GetNewShip": false,
@@ -1178,16 +1178,16 @@
   "Commission": {
     "Scheduler": {
       "Enable": true,
-      "NextRun": "2024-03-20 06:17:58",
+      "NextRun": "2024-06-04 06:15:34",
       "Command": "Commission",
       "SuccessInterval": "30-60",
       "FailureInterval": "30-60",
       "ServerUpdate": "00:00"
     },
     "Commission": {
-      "PresetFilter": "cube_24h",
+      "PresetFilter": "cube",
       "CustomFilter": "DailyEvent > Gem-4 > Gem-2 > Gem-8 > ExtraCube-0:30\n> UrgentCube-1:30 > UrgentCube-1:45 > UrgentCube-3\n> ExtraDrill-5:20 > ExtraDrill-2 > ExtraDrill-3:20\n> UrgentCube-2:15 > UrgentCube-4\n> ExtraDrill-1 > UrgentCube-6 > ExtraCube-1:30\n> ExtraDrill-2:40 > ExtraDrill-0:20\n> Major > DailyChip > DailyResource\n> ExtraPart-0:30 > ExtraOil-1 > UrgentBox-6\n> ExtraCube-3 > ExtraPart-1 > UrgentBox-3\n> ExtraCube-4 > ExtraPart-1:30 > ExtraOil-4\n> UrgentBox-1 > ExtraCube-5 > UrgentBox-1\n> ExtraCube-8 > ExtraOil-8\n> UrgentDrill-4 > UrgentDrill-2:40 > UrgentDrill-2\n> UrgentDrill-1 > UrgentDrill-1:30 > UrgentDrill-1:10\n> Extra-0:20 > Extra-0:30 > Extra-1:00 > Extra-1:30 > Extra-2:00\n> shortest",
-      "DoMajorCommission": true
+      "DoMajorCommission": false
     },
     "Storage": {
       "Storage": {}
@@ -1196,7 +1196,7 @@
   "Tactical": {
     "Scheduler": {
       "Enable": true,
-      "NextRun": "2024-03-20 06:44:11",
+      "NextRun": "2024-06-04 13:05:36",
       "Command": "Tactical",
       "SuccessInterval": "30-60",
       "FailureInterval": "120-240",
@@ -1224,7 +1224,7 @@
   "Research": {
     "Scheduler": {
       "Enable": true,
-      "NextRun": "2024-03-20 07:44:43",
+      "NextRun": "2024-06-04 06:35:07",
       "Command": "Research",
       "SuccessInterval": "30-60",
       "FailureInterval": "30-60",
@@ -1245,7 +1245,7 @@
   "Dorm": {
     "Scheduler": {
       "Enable": true,
-      "NextRun": "2024-03-20 09:16:25",
+      "NextRun": "2024-06-04 07:41:37",
       "Command": "Dorm",
       "SuccessInterval": 278,
       "FailureInterval": 278,
@@ -1268,7 +1268,7 @@
   "Meowfficer": {
     "Scheduler": {
       "Enable": true,
-      "NextRun": "2024-03-20 14:00:00",
+      "NextRun": "2024-06-04 14:00:00",
       "Command": "Meowfficer",
       "SuccessInterval": 30,
       "FailureInterval": 30,
@@ -1292,7 +1292,7 @@
   "Guild": {
     "Scheduler": {
       "Enable": true,
-      "NextRun": "2024-03-20 08:00:00",
+      "NextRun": "2024-06-04 08:00:00",
       "Command": "Guild",
       "SuccessInterval": 30,
       "FailureInterval": 30,
@@ -1318,7 +1318,7 @@
   "Reward": {
     "Scheduler": {
       "Enable": true,
-      "NextRun": "2024-03-20 08:40:49",
+      "NextRun": "2024-06-04 07:06:58",
       "Command": "Reward",
       "SuccessInterval": "120-240",
       "FailureInterval": "120-240",
@@ -1338,7 +1338,7 @@
   "Daily": {
     "Scheduler": {
       "Enable": true,
-      "NextRun": "2024-03-20 14:00:00",
+      "NextRun": "2024-06-04 14:00:00",
       "Command": "Daily",
       "SuccessInterval": 30,
       "FailureInterval": 30,
@@ -1367,7 +1367,7 @@
   "Hard": {
     "Scheduler": {
       "Enable": true,
-      "NextRun": "2024-03-20 14:00:00",
+      "NextRun": "2024-06-04 14:00:00",
       "Command": "Hard",
       "SuccessInterval": 30,
       "FailureInterval": 30,
@@ -1384,7 +1384,7 @@
   "Exercise": {
     "Scheduler": {
       "Enable": true,
-      "NextRun": "2024-03-20 08:00:00",
+      "NextRun": "2024-06-04 08:00:00",
       "Command": "Exercise",
       "SuccessInterval": 30,
       "FailureInterval": 30,
@@ -1396,8 +1396,8 @@
       "ExerciseStrategy": "aggressive",
       "LowHpThreshold": 0.4,
       "LowHpConfirmWait": 0.1,
-      "OpponentRefreshValue": 0,
-      "OpponentRefreshRecord": "2024-03-20 02:00:05"
+      "OpponentRefreshValue": 1,
+      "OpponentRefreshRecord": "2024-06-04 02:08:06"
     },
     "Storage": {
       "Storage": {}
